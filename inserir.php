@@ -12,11 +12,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     //Receber e limpar os dados
     $nome = $conn -> real_escape_string($_POST['nome']);
-    $matricula = $conn -> real_escape_string($_POST['nome']);
-    $funcao = $conn -> real_escape_string($_POST['nome']);
-
+    $matricula = $conn -> real_escape_string($_POST['matricula']);
+    $funcao = $conn -> real_escape_string($_POST['funcao']);
     //Inserir no banco
-    $sql = "INSERT INTO usuarios (ID, nome, matricula, funcao) VALUES('$nome', '$matricula', '$funcao')";
+    $sql = "INSERT INTO usuarios (nome, matricula, funcao) VALUES('$nome', '$matricula', '$funcao')";
     if($conn -> query($sql)){
         echo json_encode(["sucesso" =>true,"mensagem" =>"Usuário inserido com sucesso!"]);
     } else {

@@ -1,29 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Usuários</title>
+    <title>Estoque</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h2>Lista de Usuários</h2>
+    <h1>Estoque</h1>
     <table>
-        <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Matrícula</th>
-            <th>Função</th>
-        </tr>
-        <?php while ($linha = mysqli_fetch_assoc($resultado)) { ?>
-        <tr>
-            <td><?php echo $linha['id']; ?></td>
-            <td><?php echo $linha['nome']; ?></td>
-            <td><?php echo $linha['matricula']; ?></td>
-            <td><?php echo $linha['funcao']; ?></td>
-        </tr>
-        <?php } ?>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Matrícula</th>
+                <th>Função</th>
+            </tr>
+        </thead>
+        <tbody id="tabela-usuarios"></tbody>
     </table>
-    <a href="cadastro.html">Cadastrar novo usuário</a>
+
+    <script>
+        fetch('conexao.php')
+        .then(res => res.json())
+        .then(produtos => {
+            const tabela = document.getElementById('tabela-usuarios');
+            produtos.forEach(p =>{
+                const linha = document.createElement('tr');
+                linha.innerHTML = `
+                    <td>${p.nome}</td>
+                    <td>${p.matricula}</td>
+                    <td>${p.funcao}</td>
+                `;
+                tabela.appendChild(linha);
+            });
+        })
+        .catch(err =>{
+            console.error('Erro ao carregar produtos', err);
+        });
+    </script>
+
+    <a href="cadastro.html" class="link-basico">Cadastrar usuário</a>
 </body>
 </html>
